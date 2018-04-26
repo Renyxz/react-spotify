@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { search } from '../inc/spotify-api';
 import AUTH_URI from '../inc/auth_uri';
 import hashParams from '../inc/hashParams';
 
@@ -48,21 +49,20 @@ class App extends Component {
 
     if(!accessToken) { return; }
     
-    const keyword = encodeURIComponent('chainsmoker');
-    const searchType = ['album', 'artist', 'playlist', 'track'];
+    // Search query
+    const query = {
 
-    // Make request to Spotify API:
-    const promise = fetch(`https://api.spotify.com/v1/search?q=artist:${ keyword }&type=${ searchType }`, {
-      headers: {
-        'Authorization': 'Bearer ' + accessToken
-      }
-    });
+      accessToken, // Required
+      keyword: encodeURIComponent('chainsmoker'), // Required
+      searchType: ['album', 'artist', 'playlist', 'track'] // Required
+
+    }
+
+    // Search - Make request to Spotify API:
+    const promise = search(query);
     
     // If request is successful:
-    promise.then( (res) => {
-      return res.json();
-    })
-    .then( (data) => {
+    promise.then( (data) => {
       console.log(data);
     });
 
