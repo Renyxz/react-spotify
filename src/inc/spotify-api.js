@@ -30,22 +30,56 @@ const hashParams = (hash) => {
 
 
 
-// Search - Handles search query
-const search = (query) => {
-
-    let URI = `https://api.spotify.com/v1/search?q=artist:${ query.keyword }&type=${ query.searchType }`;
+// Query handler
+const queryHandler = (URI, query) => {
 
     const promise = fetch( URI, {
         headers: {
           'Authorization': 'Bearer ' + query.accessToken
         }
-    })
-    .then( (res) => {
+    }).then( (res) => {
+
         return res.json();
+
+    }).catch( (error) => {
+
+        console.log(error);
+
     });
 
     return promise;
+    
 }
+
+
+
+// Search - Handles search query
+const search = (query) => {
+
+    let URI = `https://api.spotify.com/v1/search?q=artist:${ query.keyword }&type=${ query.searchType }`;
+
+    const result = queryHandler(URI, query);
+
+    return result;
+}
+
+
+
+/**
+ * Browse
+ */
+
+// Get a List of Categories
+const getCategoriesList = (query) => {
+
+    let URI = `https://api.spotify.com/v1/browse/categories`;
+
+    const result = queryHandler(URI, query);
+
+    return result;
+}
+
+
 
 
 // Export modules
@@ -54,5 +88,6 @@ export {
     getAuthURI,
     hashParams,
     search,
+    getCategoriesList,
 
 }
