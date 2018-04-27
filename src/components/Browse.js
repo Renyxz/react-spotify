@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from './Search';
+import Categories from './Categories';
 
 
 class Browse extends Component {
@@ -11,6 +12,8 @@ class Browse extends Component {
             <div className="container">
 
                 <Search />
+
+                <Categories />
 
             </div>
 
