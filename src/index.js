@@ -12,6 +12,11 @@ import Browse from './components/Browse';
 // React Router Dom
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
+// React-Redux
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+
 // Includes
 import { setSession } from './inc/setSession';
 import { checkSession } from './inc/checkSession';
@@ -36,18 +41,28 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 console.log(window.sessionStorage);
 
+
+// Create store
+const store = createStore(rootReducer);
+
+
 ReactDOM.render(
 
-    <BrowserRouter>
+    <Provider store={ store } >
+    
+        <BrowserRouter>
 
-        <div>
-            
-            <Route exact path="/" component={ App } />
-            <Route exact path="/" component={ LandingPage } />
-            <PrivateRoute exact path="/browse" component={ Browse } />
+            <div>
+                
+                <Route exact path="/" component={ App } />
+                <Route exact path="/" component={ LandingPage } />
+                <PrivateRoute exact path="/browse" component={ Browse } />
 
-        </div>
+            </div>
 
-    </BrowserRouter>
+        </BrowserRouter>
+
+    </Provider>
+
 , document.getElementById('root'));
 registerServiceWorker();
