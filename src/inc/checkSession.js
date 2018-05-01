@@ -1,5 +1,3 @@
-import { hashParams } from './spotify-api';
-
 // Check session
 const date = new Date();
 const now = date.getTime();
