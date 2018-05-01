@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { search } from '../inc/spotify-api';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchData } from '../actions';
 
 
 class Search extends Component {
@@ -52,15 +55,13 @@ class Search extends Component {
         
         // If request is successful:
         promise.then( (data) => {
-          console.log(data);
+            this.props.fetchData(data);
         });
     
         // If request failed:
         promise.catch( (error) => {
           console.log(error);
         });
-    
-        console.log(accessToken, window.sessionStorage);
     
     }
 
@@ -87,4 +88,12 @@ class Search extends Component {
 
 }
 
-export default Search;
+
+const mapDispatchToProps = (dispatch) => {
+
+    return bindActionCreators({ fetchData }, dispatch);
+
+}
+
+
+export default connect( null, mapDispatchToProps )(Search);
