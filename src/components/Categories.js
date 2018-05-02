@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getCategoriesList } from '../inc/spotify-api';
+import { checkSession } from '../inc/checkSession';
+import { getCategoryPlaylists } from '../inc/spotify-api';
 
 
 class Categories extends Component {
@@ -8,7 +9,7 @@ class Categories extends Component {
         super();
 
         this.state = {
-            data: {}
+            data: []
         }
         
     }
@@ -16,56 +17,76 @@ class Categories extends Component {
     componentDidMount() {
 
         const query = {
-            accessToken: window.sessionStorage.token
+            accessToken: window.sessionStorage.token,
         }
+        
+        const categoryIds = [
+            'toplists', 'rnb', 'hiphop', 'rock', 'edm_dance',
+            'indie_alt', 'popculture', 'latin', 'chill', 'party'
+        ];
 
-        const promise = getCategoriesList(query);
+        categoryIds.forEach( id => {
 
-        promise.then( (res) => {
-            const data = res.categories.items;
-            this.setState({ data });
+            const promise = getCategoryPlaylists(query, id);
+    
+            promise.then( res => {
+                this.setState({
+                    data: this.state.data.concat(res)
+                });
+            });
+
+            promise.catch( error => {
+                console.log(error);
+            });
+
         });
+        
 
-        promise.catch( (error) => {
-            console.log(error);
-        });
     }
     
 
     render() {
 
-        const data = this.state.data;
+        const categories = this.state.data; console.log(categories);
 
-        const list = !data ? '' : Object.keys(data).map( (n, i) => {
-            const item = data[n];
-            // console.log(item);
-            return(
+        if (categories.length < 1) {
+        
+            return 'Loading...';
+        
+        } else if(categories[0].error) {
+            checkSession();
+            window.location.reload();
 
-                <div key={ i } className="col-lg-3 col-md-6 mb-3" >
+        } 
 
-                    <img className="img-fluid" src={ item.icons[0].url } alt={ item.name } />
 
-                    <div className="">
-                    
-                        { item.name }
-
-                    </div>
-
-                </div>
-
-            );
-        });
 
         return(
     
-            <div className="container-fluid">
+            <div className="">
     
-                <h3>Genres</h3>
+                <h4>Genres</h4>
     
-                <div className="d-flex row">
+                <div className="row">
                     
-                    { list }
-    
+                    {
+                        categories.map( (data, i) => {
+                            const item = data.playlists.items[0];
+                            const imgURL = item.images[0].url;
+
+                            return(
+
+                                <div key={ i } className="col-lg-2 col-md-3 col-6 mb-4">
+
+                                    <img className="img-fluid" src={ imgURL } alt={ item.name }/>
+
+                                </div>
+
+                            );
+
+                        })
+                    }
+
                 </div>
     
             </div>
