@@ -32,9 +32,9 @@ class Search extends Component {
 
     // Handles search
     handleQuery(event) {
-        
-        event.preventDefault();
     
+        event.preventDefault();
+
         const accessToken = window.sessionStorage.token;
     
         if(!accessToken) { return; }
@@ -46,7 +46,7 @@ class Search extends Component {
     
           accessToken, // Required
           keyword: encodeURIComponent(keyword), // Required
-          searchType: ['album', 'artist', 'playlist', 'track'] // Required
+          searchType: ['track', 'artist'] // Required
     
         };
     
@@ -63,12 +63,14 @@ class Search extends Component {
           console.log(error);
         });
     
+        this.setState({
+            keyword: ''
+        });
     }
 
 
     
     render() {
-        console.log(this.state.keyword);
 
         return(
 
@@ -76,7 +78,7 @@ class Search extends Component {
                 
                 <form className="form-group" action="" onSubmit={ this.handleQuery } >
 
-                    <input className="form-control" value={ this.state.keyword } type="text" placeholder="Search for track, artist, album, or playlist..." onChange={ this.handleChange } />
+                    <input className="form-control" value={ this.state.keyword } type="text" placeholder="Search for track or artist" onChange={ this.handleChange } />
 
                 </form>
 
