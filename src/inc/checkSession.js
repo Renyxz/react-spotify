@@ -6,8 +6,7 @@ export const checkSession = () => {
 
     if( now > window.sessionStorage.expiryTime) {
     
-        window.sessionStorage.removeItem('token');
-        window.sessionStorage.removeItem('expiryTime');
+        window.sessionStorage.clear();
     
     }
 
