@@ -56,7 +56,7 @@ const queryHandler = (URI, query) => {
 // Search - Handles search query
 const search = (query) => {
 
-    let URI = `https://api.spotify.com/v1/search?q=artist:${ query.keyword }&type=${ query.searchType }`;
+    let URI = `https://api.spotify.com/v1/search?q=${ query.keyword }&type=${ query.searchType }&limit=5`;
 
     const result = queryHandler(URI, query);
 
@@ -80,6 +80,15 @@ const getCategoriesList = (query) => {
 }
 
 
+// Get a category's playlist
+const getCategoryPlaylists = (query, category_id) => {
+    
+    let URI = `https://api.spotify.com/v1/browse/categories/${ category_id }/playlists?offset=0&limit=1`;
+
+    const result = queryHandler(URI, query);
+
+    return result;
+}
 
 
 // Export modules
@@ -89,5 +98,6 @@ export {
     hashParams,
     search,
     getCategoriesList,
+    getCategoryPlaylists,
 
 }
