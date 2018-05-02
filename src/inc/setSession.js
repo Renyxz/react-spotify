@@ -17,7 +17,7 @@ export const setSession = () => {
     
         if(!window.sessionStorage.expiryTime) {
         
-        const tokenLife = expiresIn * 60000;
+        const tokenLife = expiresIn * 1000;
         const timestamp = date.getTime();
         const expiryTime = timestamp + tokenLife;
         window.sessionStorage.expiryTime = expiryTime;
