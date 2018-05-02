@@ -11,7 +11,7 @@ class SearchResult extends Component {
         const searchResult = this.props.data;
         
         // If no data
-        if (searchResult.length === 0) {
+        if (searchResult.length < 1) {
             
             return(
                 
@@ -22,60 +22,75 @@ class SearchResult extends Component {
             );
         }
 
+        const tracks = searchResult[0].tracks.items;
+        const artists = searchResult[0].artists.items;
+        // console.log(artists, tracks);
 
         return(
 
             <div>
 
-                {
-                    Object.keys(searchResult).map( (type, i) => {
-                        let typeTitle = type[0].toUpperCase() + type.slice(1);
-                        const items = searchResult[type]['items'];
-                        // console.log(items);
+                <div>
 
-                        return(
+                    <h4>Tracks</h4>
 
-                            <div key={ i } >
-                                
-                                <h4>{ typeTitle }</h4>
+                    <ul className="list-group">
+                        {
+                            tracks.map( (track, i) => {
+                                console.log(track);
 
-                                <div>
-                                    {
-                                        Object.keys(items).map( (item, i) => {
-                                            const result = items[item];
-                                            
-                                            // TODO: Fix undefined error on url
-                                            const imgURL = (type === 'tracks') ? result.album.images['1'].url 
-                                            : (result.length === 0 || !result.images) ? null 
-                                            :result.images['1'];
+                                const imgURL = track.album.images.length < 1 ? 'http://via.placeholder.com/100x100' : track.album.images[1].url;
 
-                                            const image = (result.length === 0) ? null
-                                            : ( <img src={ imgURL } alt={ result.name } /> );
-                                            
-                                            console.log(imgURL)
-                                            
-                                            return(
-                                                
-                                                <div key={ i } >
+                                return(
 
-                                                    { image }
-                                                    
-                                                    <p>{ result.name }</p>
-                                                    
-                                                </div>
+                                    <li key={ i } className="list-group-item">
 
-                                            );
-                                            
-                                        })
-                                    }
-                                </div>
+                                        <img src={ imgURL } className="mr-5" width="100" alt={ track.name } />
 
-                            </div>
+                                        { track.name }
 
-                        );
+                                    </li>
 
-                    })
-                }
+                                );
+                            })
+                        }
+                    </ul>
+
+                </div>
+
+                <br/>
+                <br/>
+
+                <div>
+                    
+                    <h4>Artists</h4>
+
+                    <ul className="list-group">
+                        {
+                            artists.map( (artist, i) => {
+                                console.log(artist);
+
+                                const imgURL = artist.images.length < 1 ? 'http://via.placeholder.com/100x100' : artist.images[1].url;
+
+                                return(
+
+                                    <li key={ i } className="list-group-item">
+
+                                        <img src={ imgURL } className="mr-5" width="100" alt={ artist.name } />
+
+                                        { artist.name }
+
+                                    </li>
+
+                                );
+                            })
+                        }
+                    </ul>
+
+                </div>
+
+                <br/>
+                <br/>
 
             </div>
 
