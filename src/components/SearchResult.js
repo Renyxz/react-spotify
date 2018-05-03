@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 class SearchResult extends Component {
 
-    
+
     render() {
 
         const searchResult = this.props.data;
@@ -34,27 +34,24 @@ class SearchResult extends Component {
 
                     <h4>Tracks</h4>
 
-                    <ul className="list-group">
+                    <div>
                         {
                             tracks.map( (track, i) => {
-                                console.log(track);
 
-                                const imgURL = track.album.images.length < 1 ? 'http://via.placeholder.com/100x100' : track.album.images[1].url;
+                                const trackURL = `https://open.spotify.com/embed?uri=${ track.uri }`;
 
                                 return(
 
-                                    <li key={ i } className="list-group-item">
+                                    <div key={ i }>
 
-                                        <img src={ imgURL } className="mr-5" width="100" alt={ track.name } />
+                                        <iframe src={ trackURL } width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media" title={ track.name } ></iframe>
 
-                                        { track.name }
-
-                                    </li>
+                                    </div>
 
                                 );
                             })
                         }
-                    </ul>
+                    </div>
 
                 </div>
 
@@ -65,27 +62,25 @@ class SearchResult extends Component {
                     
                     <h4>Artists</h4>
 
-                    <ul className="list-group">
+                    <div>
                         {
-                            artists.map( (artist, i) => {
-                                console.log(artist);
+                            artists.length < 1 ? 'No artist found.'
+                            : artists.map( (artist, i) => {
 
-                                const imgURL = artist.images.length < 1 ? 'http://via.placeholder.com/100x100' : artist.images[1].url;
+                                const artistURL = `https://open.spotify.com/follow/1/?uri=${ artist.uri }&size=detail&theme=light`;
 
                                 return(
 
-                                    <li key={ i } className="list-group-item">
+                                    <div key={ i }>
 
-                                        <img src={ imgURL } className="mr-5" width="100" alt={ artist.name } />
+                                        <iframe src={ artistURL } width="100%" height="100" scrolling="no" frameBorder="0" style={{ border:'none', overflow:'hidden' }} allowtransparency="true" title={ artist.name } ></iframe>
 
-                                        { artist.name }
-
-                                    </li>
+                                    </div>
 
                                 );
                             })
                         }
-                    </ul>
+                    </div>
 
                 </div>
 
