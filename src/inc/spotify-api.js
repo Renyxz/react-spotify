@@ -91,6 +91,21 @@ const getCategoryPlaylists = (query, category_id) => {
 }
 
 
+// Get track recommendations 
+const getRecommendations = (query, seed) => {
+
+    const seed_artists = `seed_artists=${ seed.artists }`;
+    const seed_tracks = `&seed_tracks=${ seed.tracks }`;
+    const min_popularity = `&min_popularity=${ 80 }`;
+
+    let URI = `https://api.spotify.com/v1/recommendations?${ seed_artists }${ seed_tracks }${ min_popularity }`;
+    const result = queryHandler(URI, query);
+
+    return result;
+}
+
+
+
 // Export modules
 export {
 
@@ -99,5 +114,6 @@ export {
     search,
     getCategoriesList,
     getCategoryPlaylists,
+    getRecommendations,
 
 }
