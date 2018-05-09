@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { search } from '../inc/spotify-api';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchData } from '../actions';
+import { fetchSearchResult } from '../actions';
 
 
 class Search extends Component {
@@ -55,7 +55,7 @@ class Search extends Component {
         
         // If request is successful:
         promise.then( (data) => {
-            this.props.fetchData(data);
+            this.props.fetchSearchResult(data);
         });
     
         // If request failed:
@@ -93,7 +93,7 @@ class Search extends Component {
 
 const mapDispatchToProps = (dispatch) => {
 
-    return bindActionCreators({ fetchData }, dispatch);
+    return bindActionCreators({ fetchSearchResult }, dispatch);
 
 }
 

@@ -1,7 +1,8 @@
 // Action creator variables
 export const actions = {
 
-    FETCH_DATA: 'FETCH_DATA',
+    FETCH_SEARCH_RESULT: 'FETCH_SEARCH_RESULT',
+    FETCH_RECOMMENDATIONS: 'FETCH_RECOMMENDATIONS',
 
 };
 
@@ -9,10 +10,19 @@ export const actions = {
 
 // Action creators
 
-export const fetchData = (data) => {
-    console.log(data);
+export const fetchSearchResult = (data) => {
+    console.log('fetchSearchResult: ', data);
     return {
-        type: actions.FETCH_DATA,
+        type: actions.FETCH_SEARCH_RESULT,
+        payload: data
+    };
+
+}
+
+export const fetchRecommendations = (data) => {
+    console.log('fetchRecommendations: ', data);
+    return {
+        type: actions.FETCH_RECOMMENDATIONS,
         payload: data
     };
 
