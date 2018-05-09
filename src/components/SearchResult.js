@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RecommendTracks from './RecommendTracks';
 
 
 
@@ -22,8 +23,8 @@ class SearchResult extends Component {
             );
         }
 
-        const tracks = searchResult[0].tracks.items;
-        const artists = searchResult[0].artists.items;
+        const tracks = searchResult[0].tracks;
+        const artists = searchResult[0].artists;
         // console.log(artists, tracks);
 
         return(
@@ -40,11 +41,27 @@ class SearchResult extends Component {
 
                                 const trackURL = `https://open.spotify.com/embed?uri=${ track.uri }`;
 
+                                const seed = {
+                                    artists: [track.artists[0].id],
+                                    tracks: [track.id],
+                                };
+
+                                setTimeout( () => {
+                                    return (
+                                        <div>Loading...</div>
+                                    );
+                                }, 5000);
+
                                 return(
 
-                                    <div key={ i }>
+                                    <div key={ i } className="row">
 
-                                        <iframe src={ trackURL } width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media" title={ track.name } ></iframe>
+                                        <iframe src={ trackURL } className="col-lg-10 col-md-10" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media" title={ track.name } ></iframe>
+
+                                        <div className="col-lg-2 col-md-2">
+                                            <RecommendTracks seed={ seed } />
+                                            <i className="fas fa-heart"></i>
+                                        </div>
 
                                     </div>
 
@@ -65,15 +82,15 @@ class SearchResult extends Component {
                     <div>
                         {
                             artists.length < 1 ? 'No artist found.'
-                            : artists.map( (artist, i) => {
+                            : artists.map( (id, i) => {
 
-                                const artistURL = `https://open.spotify.com/follow/1/?uri=${ artist.uri }&size=detail&theme=light`;
+                                const artistURL = `https://open.spotify.com/follow/1/?uri=spotify:artist:${ id }&size=detail&theme=light`;
 
                                 return(
 
                                     <div key={ i }>
 
-                                        <iframe src={ artistURL } width="100%" height="100" scrolling="no" frameBorder="0" style={{ border:'none', overflow:'hidden' }} allowtransparency="true" title={ artist.name } ></iframe>
+                                        <iframe src={ artistURL } width="100%" height="100" scrolling="no" frameBorder="0" style={{ border:'none', overflow:'hidden' }} allowtransparency="true" title={ id } ></iframe>
 
                                     </div>
 
