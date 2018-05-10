@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RecommendTracks from './RecommendTracks';
+import AddToPlaylist from './AddToPlaylist';
 
 
 
@@ -54,13 +55,13 @@ class SearchResult extends Component {
 
                                 return(
 
-                                    <div key={ i } className="row">
+                                    <div key={ i } className="bg-dark d-flex flex-row">
 
-                                        <iframe src={ trackURL } className="col-lg-10 col-md-10" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media" title={ track.name } ></iframe>
+                                        <iframe src={ trackURL } className="" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media" title={ track.name } ></iframe>
 
-                                        <div className="col-lg-2 col-md-2">
+                                        <div>
                                             <RecommendTracks seed={ seed } />
-                                            <i className="fas fa-heart"></i>
+                                            <AddToPlaylist track={ track.id } />
                                         </div>
 
                                     </div>
