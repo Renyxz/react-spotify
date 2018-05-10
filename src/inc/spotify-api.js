@@ -34,6 +34,7 @@ const hashParams = (hash) => {
 const queryHandler = (URI, query) => {
 
     const promise = fetch( URI, {
+        method: query.method,
         headers: {
           'Authorization': 'Bearer ' + query.accessToken
         }
@@ -106,6 +107,35 @@ const getRecommendations = (query, seed) => {
 
 
 
+/**
+ * Playlist
+ */
+
+// Get the list of current user's playlists
+const getMyPlaylists = (query) => {
+
+    const URI = 'https://api.spotify.com/v1/me/playlists';
+    const result = queryHandler(URI, query);
+
+    return result;
+}
+
+
+
+// Add tracks to a playlist
+const addTracksToPlaylist = (query) => {
+
+    const track_uris = `?uris=${ encodeURIComponent('spotify:track:' + query.track_id) }`;
+    const scopes = `&scope=${ encodeURIComponent('playlist-modify playlist-modify-public') }`;
+    
+    const URI = `https://api.spotify.com/v1/users/${ query.user_id }/playlists/${ query.playlist_id }/tracks${ track_uris }${ scopes }`;
+    const result = queryHandler(URI, query);
+    
+    return result;
+};
+
+
+
 // Export modules
 export {
 
@@ -115,5 +145,7 @@ export {
     getCategoriesList,
     getCategoryPlaylists,
     getRecommendations,
+    getMyPlaylists,
+    addTracksToPlaylist,
 
 }
