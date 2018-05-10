@@ -29,8 +29,9 @@ const RecommendTracks = ({ seed, fetchRecommendations }) => {
 
     return(
 
-        <i className="fas fa-angle-double-right mr-3" onClick={ () => handleRecommend(seed) } >
-        </i>
+        <button className="btn btn-dark" onClick={ () => handleRecommend(seed) } >
+            <i className="fas fa-angle-double-right"></i>
+        </button>
 
     );
 
