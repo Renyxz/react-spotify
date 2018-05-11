@@ -122,6 +122,17 @@ const getMyPlaylists = (query) => {
 
 
 
+// Get a Playlist's Tracks
+const getPlaylistTracks = (query) => {
+
+    const URI = `https://api.spotify.com/v1/users/${ query.user_id }/playlists/${ query.playlist_id }/tracks`;
+    const result = queryHandler(URI, query);
+
+    return result;
+};
+
+
+
 // Add tracks to a playlist
 const addTracksToPlaylist = (query) => {
 
@@ -146,6 +157,7 @@ export {
     getCategoryPlaylists,
     getRecommendations,
     getMyPlaylists,
+    getPlaylistTracks,
     addTracksToPlaylist,
 
 }
