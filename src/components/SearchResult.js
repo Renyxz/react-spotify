@@ -38,7 +38,8 @@ class SearchResult extends Component {
 
                     <div>
                         {
-                            tracks.map( (track, i) => {
+                            tracks.length < 1 ? 'No track found.'
+                            : tracks.map( (track, i) => {
 
                                 const trackURL = `https://open.spotify.com/embed?uri=${ track.uri }`;
 
@@ -80,7 +81,7 @@ class SearchResult extends Component {
                     
                     <h4>Artists</h4>
 
-                    <div>
+                    <div className="row">
                         {
                             artists.length < 1 ? 'No artist found.'
                             : artists.map( (id, i) => {
@@ -89,7 +90,7 @@ class SearchResult extends Component {
 
                                 return(
 
-                                    <div key={ i }>
+                                    <div key={ i } className="col-lg-4">
 
                                         <iframe src={ artistURL } width="100%" height="100" scrolling="no" frameBorder="0" style={{ border:'none', overflow:'hidden' }} allowtransparency="true" title={ id } ></iframe>
 
