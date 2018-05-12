@@ -55,7 +55,7 @@ class AddToPlaylist extends Component {
         const promise = addTracksToPlaylist(query);
 
         promise.then( res => {
-            console.log(res); // TODO: Fix insufficient client scope error
+            console.log(res);
         });
 
         promise.catch( error => {
