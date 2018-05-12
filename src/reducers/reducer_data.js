@@ -18,7 +18,7 @@ const data = (state = [], action) => {
                 artists: search_res_artists_id, 
                 tracks: action.payload.tracks.items
             }];
-        
+
         case actions.FETCH_RECOMMENDATIONS:
 
             let recommandations_artists_id = [];
@@ -34,6 +34,23 @@ const data = (state = [], action) => {
                 tracks: action.payload.tracks
             }];
         
+        case actions.FETCH_CATEGORY:
+            let tracks = [];
+            let artists = [];
+
+            action.payload.items.forEach( item => {
+                tracks.push(item.track);
+                
+                item.track.artists.forEach( artist => {
+                    artists.push(artist.id);
+                });
+            });
+            
+            return [{
+                artists: unique(artists),
+                tracks
+            }];
+
         default:
             return state;
 

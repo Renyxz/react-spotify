@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchCategory } from '../actions';
 import { checkSession } from '../inc/checkSession';
 import { getCategoryPlaylists, getPlaylistTracks } from '../inc/spotify-api';
 
@@ -56,9 +59,9 @@ class Categories extends Component {
 
         const promise = getPlaylistTracks(query);
 
-        promise.then( res => {
-            console.log(res);
-            // TODO: dispatch getPlaylistTracks
+        promise.then( (data) => {
+            console.log(data);
+            this.props.fetchCategory(data);
         });
 
         promise.catch( error => {
@@ -140,4 +143,9 @@ class Categories extends Component {
 
 }
 
-export default Categories;
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ fetchCategory }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Categories);
