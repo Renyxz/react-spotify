@@ -15,24 +15,6 @@ const getAuthURI = (client) => {
 
 
 
-// Extracts hash values from url parameters
-const hashParams = (hash) => {
-    let params = {};
-          
-    let e, 
-        r = /([^&;=]+)=?([^&;]*)/g,
-        q = hash.substring(1);
-    
-        while ( e = r.exec(q)) {
-        params[e[1]] = decodeURIComponent(e[2]);
-        }
-    
-    return params;
-
-}
-
-
-
 // Query handler
 const queryHandler = (URI, query) => {
 
@@ -153,7 +135,6 @@ const addTracksToPlaylist = (query) => {
 export {
 
     getAuthURI,
-    hashParams,
     search,
     getCategoriesList,
     getCategoryPlaylists,

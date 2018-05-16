@@ -1,4 +1,4 @@
-import { getAuthURI } from './spotify-api'
+const api = require('./spotify-api');
 
 // Implicit Grant Auth variables
 const client = {
@@ -10,6 +10,6 @@ const client = {
 };
 
 // Gets the authentication URI
-const AUTH_URI = getAuthURI(client);
+const AUTH_URI = api.getAuthURI(client);
 
-export default AUTH_URI;
+module.exports = AUTH_URI;

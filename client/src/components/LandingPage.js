@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import AUTH_URI from '../inc/auth_uri';
+import { redirectToAuth } from '../inc/requestsToServer';
 
 
 
@@ -16,14 +16,6 @@ const LandingPage = ({ handleRedirect }) => {
 
         );
 
-    }
-
-
-    // This will redirect to the Spotify authentication page
-    const redirectToAuth = () => {
-
-        window.location = AUTH_URI;
-        
     }
 
 

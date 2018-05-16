@@ -1,22 +1,25 @@
 {
   "name": "react-spotify",
-  "version": "0.1.0",
-  "private": true,
-  "proxy": "http://localhost:3000",
-  "dependencies": {
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4",
-    "redux": "^4.0.0"
-  },
+  "version": "1.0.0",
+  "description": "React Spotify App",
+  "main": "server/index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "sass": "sass --watch src/styles/scss:src/styles/css",
-    "sass:build": "sass — update src/styles/scss:src/styles/css",
-    "build": "npm run sass:build && react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "client": "cd client && npm run start",
+    "server": "cd server && npm run server",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Renyxz/react-spotify.git"
+  },
+  "author": "Ren Yingxian Zhou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Renyxz/react-spotify/issues"
+  },
+  "homepage": "https://github.com/Renyxz/react-spotify#readme",
+  "dependencies": {
+    "concurrently": "^3.5.1"
   }
 }

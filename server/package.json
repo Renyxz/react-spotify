@@ -1,0 +1,16 @@
+{
+  "name": "react-spotify",
+  "version": "1.0.0",
+  "description": "React Spotify App",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js || node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ren Yingxian Zhou",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}

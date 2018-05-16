@@ -1,4 +1,4 @@
-import { hashParams } from './spotify-api';
+import { hashParams } from './functions';
 
 // Set session
 const hash = window.location.hash;

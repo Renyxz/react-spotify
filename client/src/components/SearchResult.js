@@ -90,7 +90,7 @@ class SearchResult extends Component {
 
                                 return(
 
-                                    <div key={ i } className="col-lg-4">
+                                    <div key={ i } className="col-lg-4 col-md-6">
 
                                         <iframe src={ artistURL } width="100%" height="100" scrolling="no" frameBorder="0" style={{ border:'none', overflow:'hidden' }} allowtransparency="true" title={ id } ></iframe>
 
