@@ -1,31 +1,18 @@
-// This gets the user authentication URI
-const getAuthURI = (client) => {
-
-    const scopes = 'playlist-modify playlist-modify-public playlist-modify-private';
-
-    let AUTH_URI = 'https://accounts.spotify.com/authorize';
-    AUTH_URI += `?client_id=${ encodeURIComponent(client.client_id) }`;
-    AUTH_URI += `&scope=${ encodeURIComponent(scopes) }`;
-    AUTH_URI += `&redirect_uri=${ encodeURIComponent(client.redirect_uri) }`;
-    AUTH_URI += `&response_type=${ client.response_type }`;
-
-    return AUTH_URI;
-
-}
-
+import axios from 'axios';
 
 
 // Query handler
-const queryHandler = (URI, query) => {
+const queryHandler = (URI, req) => {
 
-    const promise = fetch( URI, {
-        method: query.method,
+    const promise = axios( URI, {
+        method: req.method,
         headers: {
-          'Authorization': 'Bearer ' + query.accessToken
-        }
+          'Authorization': 'Bearer ' + req.accessToken
+        },
+        params: req
     }).then( (res) => {
 
-        return res.json();
+        return res;
 
     }).catch( (error) => {
 
@@ -134,7 +121,6 @@ const addTracksToPlaylist = (query) => {
 // Export modules
 export {
 
-    getAuthURI,
     search,
     getCategoriesList,
     getCategoryPlaylists,
