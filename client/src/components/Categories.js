@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchCategory } from '../actions';
 import { checkSession } from '../inc/checkSession';
+import { setDataSession } from '../inc/setDataSession';
 import { getCategoryPlaylists, getPlaylistTracks } from '../inc/spotify-api';
 
 
@@ -12,30 +13,48 @@ class Categories extends Component {
         super();
 
         this.state = {
-            data: []
+            data: [],
+            categoryIds: [
+                'toplists', 'rnb', 'hiphop', 'rock', 'edm_dance',
+                'indie_alt', 'popculture', 'latin', 'chill', 'party'
+            ]
         }
         
     }
 
     componentDidMount() {
 
+        const dataSession = window.sessionStorage.getItem('categories');
+
+        if(dataSession !== null) {
+            this.setState({
+                data: this.state.data.concat(JSON.parse(dataSession))
+            });
+            return;
+        }
+
         const query = {
             accessToken: window.sessionStorage.token,
+            method: 'GET'
         }
         
-        const categoryIds = [
-            'toplists', 'rnb', 'hiphop', 'rock', 'edm_dance',
-            'indie_alt', 'popculture', 'latin', 'chill', 'party'
-        ];
+        const categoryIds = this.state.categoryIds;
 
         categoryIds.forEach( id => {
-
             const promise = getCategoryPlaylists(query, id);
     
             promise.then( res => {
+                
+                if(!res) {
+                    return;
+                }
+
+                const data = res.data.playlists.items[0];
+
                 this.setState({
-                    data: this.state.data.concat(res)
+                    data: this.state.data.concat(data)
                 });
+
             });
 
             promise.catch( error => {
@@ -43,7 +62,6 @@ class Categories extends Component {
             });
 
         });
-        
 
     }
     
@@ -53,14 +71,15 @@ class Categories extends Component {
 
         const query = {
             accessToken: window.sessionStorage.token,
+            method: 'GET',
             user_id: params.user_id,
             playlist_id: params.playlist_id
         };
 
         const promise = getPlaylistTracks(query);
 
-        promise.then( (data) => {
-            console.log(data);
+        promise.then( (res) => {
+            const data = res.data.items;
             this.props.fetchCategory(data);
         });
 
@@ -72,12 +91,12 @@ class Categories extends Component {
 
 
     render() {
-
+        const dataSession = window.sessionStorage.getItem('categories');
         const categories = this.state.data; console.log(categories);
 
         if (categories.length < 1) {
         
-            return 'Loading...';
+            return '';
         
         } else if(categories[0].error) {
             checkSession();
@@ -85,6 +104,14 @@ class Categories extends Component {
 
         } 
 
+        if(dataSession === null && categories.length === 10) {
+            const item = {
+                key: 'categories',
+                data: JSON.stringify(categories)
+            };
+
+            setDataSession(item);
+        }
 
 
         return(
@@ -106,8 +133,7 @@ class Categories extends Component {
                             <div className="row">
                                 
                                 {
-                                    categories.map( (data, i) => {
-                                        const item = data.playlists.items[0];
+                                    categories.map( (item, i) => {
                                         const imgURL = item.images[0].url;
 
                                         const params = {

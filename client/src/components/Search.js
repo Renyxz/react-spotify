@@ -45,6 +45,7 @@ class Search extends Component {
         const query = {
     
           accessToken, // Required
+          method: 'GET', // Required for axios
           keyword: encodeURIComponent(keyword), // Required
           searchType: ['track', 'artist'] // Required
     
@@ -54,8 +55,8 @@ class Search extends Component {
         const promise = search(query);
         
         // If request is successful:
-        promise.then( (data) => {
-            this.props.fetchSearchResult(data);
+        promise.then( (res) => {
+            this.props.fetchSearchResult(res.data);
         });
     
         // If request failed:

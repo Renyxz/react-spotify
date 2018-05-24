@@ -7,13 +7,35 @@ import AddToPlaylist from './AddToPlaylist';
 
 class SearchResult extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            tracks: [],
+            artists: []
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        const data = nextProps.data[0];
+        
+        this.setState({
+            tracks: data.tracks,
+            artists: data.artists
+        });
+        
+    }
+
+
 
     render() {
+        // TODO: Make sure the states are being set with session data
+        const tracks = this.state.tracks;
+        const artists = this.state.artists;
+        // console.log(artists, tracks);
 
-        const searchResult = this.props.data;
-        
-        // If no data
-        if (searchResult.length < 1) {
+        if (tracks.length < 1 && artists.length < 1) {
             
             return(
                 
@@ -24,9 +46,7 @@ class SearchResult extends Component {
             );
         }
 
-        const tracks = searchResult[0].tracks;
-        const artists = searchResult[0].artists;
-        // console.log(artists, tracks);
+
 
         return(
 

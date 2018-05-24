@@ -38,7 +38,7 @@ const data = (state = [], action) => {
             let tracks = [];
             let artists = [];
 
-            action.payload.items.forEach( item => {
+            action.payload.forEach( item => {
                 tracks.push(item.track);
                 
                 item.track.artists.forEach( artist => {
